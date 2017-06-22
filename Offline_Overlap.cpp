@@ -59,16 +59,16 @@ class Tuple {
 		}
 		
 		bool isAGeneralizationOf(Tuple x) {
-			if(x.label.origin_esp > this->label.origin_esp || x.label.destiny_esp > this->label.destiny_esp) {
+			if(x.label.origin_esp < this->label.origin_esp || x.label.destiny_esp < this->label.destiny_esp) {
 				return false;
 			}
 			Tuple y = x.generalizeTo(this->label);
 			return this->origin.full == y.origin.full && this->destiny.full == y.destiny.full;
 		}
 		
-		bool iamthekidyouknowwhatimean(Tuple e, list<Tuple> hhh) {
+		bool iamthekidyouknowwhatimean(Tuple e, list<Tuple> *hhh) {
 			list<Tuple>::iterator h;
-			for(h = hhh.begin(); h != hhh.end(); ++h) {
+			for(h = hhh->begin(); h != hhh->end(); ++h) {
 				if (h->isAGeneralizationOf(e) && this->isAGeneralizationOf(*h)) {
 					return true;
 				}
@@ -157,7 +157,7 @@ list<Tuple> overlap(list<Tuple> S, float phi) {
 			interlist.clear(); //list <- empty
 			for(e = S.begin(); e != S.end(); ++e) { // for all (e element of S)
 				p = e->generalizeTo(*label);
-				if(!p.iamthekidyouknowwhatimean(*e, hhh)){ // if ¬(Exist an h element of hhh : (isAGeneralizationOf(h,e) and isAGeneralizationOf(p,h)
+				if(!p.iamthekidyouknowwhatimean(*e, &hhh)){ // if ¬(Exist an h element of hhh : (isAGeneralizationOf(h,e) and isAGeneralizationOf(p,h)
 					found = false;
 					for(f = interlist.begin(); f != interlist.end(); ++f) { 
 						if(p.equals(*f)){                  // if p belongs to list
@@ -193,26 +193,26 @@ int main(int argc, char *argv[]) {
 	
 	ifstream file;
 	file.open(filename);
-	int byte[4], count;
+	int byte[8], count;
 	char dot;
 	ip origin, destiny;
 	list<Tuple> S;
 	
 	while(!file.eof()) {
-		file >> byte[0] >> dot>> byte[1] >> dot >> byte[2] >> dot >> byte[3];
+		file >> byte[0] >> dot >> byte[1] >> dot >> byte[2] >> dot >> byte[3]
+		>> byte[4] >> dot >> byte[5] >> dot >> byte[6] >> dot >> byte[7] >> count;
 		origin.byte[0] = byte[0];
 		origin.byte[1] = byte[1];
 		origin.byte[2] = byte[2];
 		origin.byte[3] = byte[3];
-		file >> byte[0] >> dot >> byte[1] >> dot >> byte[3] >> dot >> byte[4] >> count;
-		destiny.byte[0] = byte[0];
-		destiny.byte[1] = byte[1];
-		destiny.byte[2] = byte[2];
-		destiny.byte[3] = byte[3];
+		destiny.byte[0] = byte[4];
+		destiny.byte[1] = byte[5];
+		destiny.byte[2] = byte[6];
+		destiny.byte[3] = byte[7];
 		
 		S.insert(S.end(), Tuple(origin, destiny, Label(4,4), count));
 	}
-	
+
 	float phi;
 	cout << "Entre com um valor para phi: ";
 	cin >> phi;
