@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <fstream>
 #include <string.h>
+#include <cstdlib>
 
 using namespace std;
 
@@ -184,45 +185,53 @@ list<Tuple> overlap(list<Tuple> S, float phi) {
 
 int main(int argc, char *argv[]) {
 	char filename[30];
-	if(argc == 2) {
-		strcpy(filename, argv[1]);
-	} else {
+	if(argc < 2) {
 		cout << "Entre com o nome do arquivo: ";
 		cin >> filename;
+	} else {
+		strcpy(filename, argv[1]);
 	}
 	
 	ifstream file;
 	file.open(filename);
-	int byte[8], count;
-	char dot;
-	ip origin, destiny;
-	list<Tuple> S;
-	
-	while(!file.eof()) {
-		file >> byte[0] >> dot >> byte[1] >> dot >> byte[2] >> dot >> byte[3]
-		>> byte[4] >> dot >> byte[5] >> dot >> byte[6] >> dot >> byte[7] >> count;
-		origin.byte[0] = byte[0];
-		origin.byte[1] = byte[1];
-		origin.byte[2] = byte[2];
-		origin.byte[3] = byte[3];
-		destiny.byte[0] = byte[4];
-		destiny.byte[1] = byte[5];
-		destiny.byte[2] = byte[6];
-		destiny.byte[3] = byte[7];
+	if(file.is_open()) {
+		int byte[8], count;
+		char dot;
+		ip origin, destiny;
+		list<Tuple> S;
 		
-		S.insert(S.end(), Tuple(origin, destiny, Label(4,4), count));
+		while(!file.eof()) {
+			file >> byte[0] >> dot >> byte[1] >> dot >> byte[2] >> dot >> byte[3]
+			>> byte[4] >> dot >> byte[5] >> dot >> byte[6] >> dot >> byte[7] >> count;
+			origin.byte[0] = byte[0];
+			origin.byte[1] = byte[1];
+			origin.byte[2] = byte[2];
+			origin.byte[3] = byte[3];
+			destiny.byte[0] = byte[4];
+			destiny.byte[1] = byte[5];
+			destiny.byte[2] = byte[6];
+			destiny.byte[3] = byte[7];
+			
+			S.insert(S.end(), Tuple(origin, destiny, Label(4,4), count));
+		}
+		
+		float phi;
+		if(argc < 3){
+			cout << "Entre com um valor para phi: ";
+			cin >> phi;
+		} else {
+			phi = atof(argv[2]);
+		}
+		
+		list<Tuple> result = overlap(S, phi);
+		
+		list<Tuple>::iterator i;
+		for(i = result.begin(); i != result.end(); ++i) {
+			i->print();
+		}
+		
+	} else {
+		cout << "Unable to open file :C";
 	}
-
-	float phi;
-	cout << "Entre com um valor para phi: ";
-	cin >> phi;
-	
-	list<Tuple> result = overlap(S, phi);
-	
-	list<Tuple>::iterator i;
-	for(i = result.begin(); i != result.end(); ++i) {
-		i->print();
-	}
-	
 	return 0;
 }
