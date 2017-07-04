@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string.h>
 #include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -223,12 +224,17 @@ int main(int argc, char *argv[]) {
 			phi = atof(argv[2]);
 		}
 		
+		time_t beginning, end;
+		time(&beginning);
 		list<Tuple> result = overlap(S, phi);
+		time(&end);
 		
 		list<Tuple>::iterator i;
 		for(i = result.begin(); i != result.end(); ++i) {
 			i->print();
 		}
+		
+		cout << "Duration: " << difftime(end, beginning) << " seconds" << endl;
 		
 	} else {
 		cout << "Unable to open file :C";
