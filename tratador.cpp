@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
 			line << s;
             line >> IP >> number[0] >> dot >> number[1] >> dot >> number[2] >> dot >> number[3] >> dot >> number[4] >> arrow
             >> number[5] >> dot >> number[6] >> dot >> number[7] >> dot >> number[8] >> dot >> number[9] >> colon >> tcp >> number[10];
-            if(!strcmp(IP, "IP") && !strcmp(tcp, "tcp")) {
+            if(!strcmp(IP, "IP") && !strcmp(tcp, "tcp") && number[10] > 0) {
             	cout << number[0] << '.' << number[1] << '.' << number[2] << '.' << number[3] << ' ' << number[5] << '.' << number[6]
                 << '.' << number[7] << '.' << number[8] << ' ' << number[10] << endl;
 			}
