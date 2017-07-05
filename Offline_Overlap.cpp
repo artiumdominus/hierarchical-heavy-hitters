@@ -165,6 +165,7 @@ list<Tuple> overlap(list<Tuple> S, float phi) {
 						if(p.equals(*f)){                  // if p belongs to list
 							f->count += e->count; //fp += fe
 							found = true;
+							break;
 						}
 					}
 					if(!found) {          // else
