@@ -83,10 +83,15 @@ class Tuple {
 		}
 		
 		void print(){
-			int i;
-			cout << "(origin: ";
+			int i, x;
+			cout << "(";
 			for(i = 0; i < label.origin_esp; ++i) {
-				cout << (int)origin.byte[i];
+				x = origin.byte[i];
+				if(x > 0) {
+					cout << x;
+				} else {
+					cout << x+256;
+				}
 				if(i < 3) {
 					cout << ".";
 				}
@@ -94,9 +99,14 @@ class Tuple {
 			if(label.origin_esp != 4) {
 				cout << "*";
 			}
-			cout << ", destiny: ";
+			cout << ", ";
 			for(i = 0; i < label.destiny_esp; ++i) {
-				cout << (int)destiny.byte[i];
+				x = destiny.byte[i];
+				if(x > 0) {
+					cout << x;
+				} else {
+					cout << x+256;
+				}
 				if(i < 3) {
 					cout << ".";
 				}
