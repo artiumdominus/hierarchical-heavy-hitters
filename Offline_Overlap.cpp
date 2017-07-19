@@ -87,7 +87,7 @@ class Tuple {
 			cout << "(";
 			for(i = 0; i < label.origin_esp; ++i) {
 				x = origin.byte[i];
-				if(x > 0) {
+				if(x >= 0) {
 					cout << x;
 				} else {
 					cout << x+256;
@@ -102,7 +102,7 @@ class Tuple {
 			cout << ", ";
 			for(i = 0; i < label.destiny_esp; ++i) {
 				x = destiny.byte[i];
-				if(x > 0) {
+				if(x >= 0) {
 					cout << x;
 				} else {
 					cout << x+256;
