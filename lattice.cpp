@@ -3,7 +3,7 @@
 using namespace std;
 
 union ip {
-	short full;
+	int full;
 	char byte[4];
 };
 
